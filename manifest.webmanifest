@@ -1,0 +1,10 @@
+{
+  "name": "PiscineiroPro",
+  "short_name": "PiscineiroPro",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f3f7fb",
+  "theme_color": "#087bc1",
+  "lang": "pt-BR",
+  "description": "Sistema de gestão para piscineiros."
+}

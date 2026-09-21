@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#087bc1">
+<link rel="manifest" href="manifest.webmanifest">
+<title>PiscineiroPro</title>
+<meta name="piscineiropro-version" content="SaaS-Fase3-Asaas-2026-09-15">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:#f3f7fb;color:#16324a}
+button,input,select,textarea{font:inherit}.hidden{display:none!important}
+.app{display:flex;min-height:100vh}.side{width:245px;background:#073b66;color:#fff;padding:22px 16px;position:fixed;height:100vh;z-index:5}
+.logo{font-size:24px;font-weight:800;margin-bottom:30px}.logo span{color:#35b8ff}.userbox{font-size:12px;color:#b9d8ed;margin:-15px 0 20px;word-break:break-word}
+.nav button{width:100%;border:0;background:transparent;color:#dcecff;padding:13px 12px;text-align:left;border-radius:10px;margin:3px 0;font-size:15px;cursor:pointer}.nav button.active,.nav button:hover{background:#0b5c94}
+.main{margin-left:245px;width:calc(100% - 245px);padding:25px;max-width:1500px}
+h1{margin:0 0 5px;font-size:28px}.muted{color:#71869a}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;gap:12px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.card{background:#fff;border-radius:15px;padding:18px;box-shadow:0 4px 18px #16324a12}.value{font-size:25px;font-weight:800;margin-top:8px}.blue{color:#087bc1}.green{color:#15945c}.red{color:#d94a4a}.orange{color:#db8618}
+.grid{display:grid;grid-template-columns:2fr 1fr;gap:18px;margin-top:18px}.panel{background:#fff;border-radius:15px;padding:20px;box-shadow:0 4px 18px #16324a12}
+.btn{border:0;border-radius:9px;padding:11px 15px;background:#087bc1;color:#fff;font-weight:700;cursor:pointer}.btn.greenbtn{background:#15945c}.btn.light{background:#e8f4fc;color:#087bc1}.btn.redbtn{background:#d94a4a}.btn.gray{background:#eef2f5;color:#456}
+.row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid #edf1f4;gap:10px}.row:last-child{border-bottom:0}
+.badge{padding:5px 9px;border-radius:20px;font-size:12px;font-weight:700;background:#e7f6ee;color:#15945c;white-space:nowrap}.badge.orange{background:#fff4df;color:#b76b00}.badge.red{background:#fdeaea;color:#d94a4a}.badge.blue{background:#e8f4fc;color:#087bc1}
+input,select,textarea{width:100%;padding:11px;border:1px solid #d7e1e8;border-radius:9px;margin:6px 0 12px;background:#fff}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.screen{display:none}.screen.active{display:block}.actions{display:flex;gap:8px;flex-wrap:wrap}.search{max-width:420px}
+.modal{display:none;position:fixed;inset:0;background:#0007;z-index:20;align-items:center;justify-content:center;padding:15px}.modal.open{display:flex}.modalbox{background:#fff;border-radius:16px;padding:22px;width:min(700px,100%);max-height:90vh;overflow:auto}
+.auth{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#073b66,#087bc1)}.authbox{background:#fff;width:min(430px,100%);padding:30px;border-radius:20px;box-shadow:0 15px 50px #0003}.authbox h1{font-size:30px}.authmsg{padding:11px;border-radius:9px;margin:10px 0;background:#fff4df;color:#805800;font-size:14px}.setup{max-width:650px}
+.empty{padding:35px;text-align:center;color:#71869a}.mobilebar{display:none}.mobileMenuOverlay{display:none;position:fixed;inset:0;background:#0007;z-index:30;align-items:flex-end}.mobileMenuOverlay.open{display:flex}.mobileMenuBox{width:100%;background:#fff;border-radius:24px 24px 0 0;padding:18px 16px 24px;box-shadow:0 -10px 35px #0003}.mobileMenuTitle{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.mobileMenuTitle b{font-size:18px;color:#18324b}.mobileMenuClose{border:0;background:#eef5f9;color:#456;width:38px;height:38px;border-radius:50%;font-size:20px}.mobileMenuGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mobileMenuItem{border:0;background:#f3f8fc;color:#18324b;border-radius:15px;padding:14px 12px;text-align:left;font-weight:800;cursor:pointer}.mobileMenuItem span{display:block;font-size:12px;color:#71869a;font-weight:500;margin-top:3px}.receiptActions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.docLogo{max-width:110px;max-height:90px;object-fit:contain;border-radius:12px}.docHeader{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;border-bottom:2px solid #e6eef4;padding-bottom:18px;margin-bottom:20px}.docCompany{font-size:22px;font-weight:900;color:#125a95}.docTitle{font-size:30px;font-weight:900;color:#18324b}.docMeta{font-size:13px;color:#71869a;line-height:1.6}.docTotal{font-size:28px;font-weight:900;color:#087bc1}.docBox{background:#f6faff;border-radius:14px;padding:14px;margin:12px 0}.mobileMenuGrid{grid-template-columns:1fr 1fr}.mobileMenuItem{min-height:78px}.toast{position:fixed;right:20px;bottom:20px;background:#16324a;color:#fff;padding:12px 16px;border-radius:10px;z-index:50;box-shadow:0 5px 20px #0003}
+@media(max-width:850px){.side{display:none}.main{margin:0;width:100%;padding:15px 15px 80px}.cards{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.mobilebar{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #ddd;z-index:10}.mobilebar button{flex:1;border:0;background:#fff;padding:10px 2px;font-size:11px;color:#456}.mobilebar button.active{color:#087bc1;font-weight:800}.mobilebar .moreBtn{font-size:11px}.formgrid{grid-template-columns:1fr}}
+/* === PiscineiroPro visual redesign v1 === */
+body{background:#eaf7fb;color:#263746}
+.app{min-height:100vh}.main{padding:0 28px 35px;max-width:1500px}
+#home{max-width:1100px;margin:0 auto;padding-top:18px}
+.homeHero{background:linear-gradient(135deg,#0b5b96,#087bc1);color:#fff;border-radius:0 0 28px 28px;padding:28px 28px 30px;margin:0 -28px 22px;box-shadow:0 8px 30px #087bc122}
+.homeBrand{font-size:30px;font-weight:900;letter-spacing:-.6px}.homeBrand span{color:#19c5bd}.homeSubtitle{font-size:15px;opacity:.9;margin-top:4px}.homeDate{font-size:14px;font-weight:700;margin-top:20px;opacity:.95}
+.homeHeroTop{display:flex;justify-content:space-between;align-items:flex-start;gap:15px}.homeGear{width:46px;height:46px;border-radius:50%;border:0;background:#ffffff22;color:#fff;font-size:22px}.homeNew{background:#19c5bd!important;border-radius:14px!important;padding:13px 18px!important;font-size:14px!important;box-shadow:0 7px 16px #0002}
+.homeAlert{background:#fffaf0;border:2px solid #f2c94c;border-radius:24px;padding:18px;margin-bottom:18px;box-shadow:0 5px 18px #16324a10}.alertHead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}.alertTitle{font-size:21px;font-weight:900;color:#a95509}.alertSub{font-size:14px;color:#9a6a34;margin-top:3px}.alertIcon{font-size:29px}.alertList{display:grid;gap:8px}.alertItem{background:#fff;border-radius:15px;padding:11px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px}.alertItem b{color:#125a95}.alertItem .lateValue{font-size:17px;font-weight:900;color:#ef3340;white-space:nowrap}.alertItem small{display:block;color:#ef3340;font-weight:700;margin-top:2px}.seeAll{border:0;background:#ffe58a;color:#8f4e00;border-radius:14px;padding:11px 14px;font-weight:900;cursor:pointer}
+.homeTiles{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}.homeTile{border-radius:22px;padding:18px;color:#fff;min-height:128px;box-shadow:0 8px 22px #16324a18}.homeTile.greenTile{background:#19b978}.homeTile.redTile{background:#ef3340}.homeTile.cyanTile{background:#20afd0}.homeTile.purpleTile{background:#6654df}.tileLabel{font-size:14px;font-weight:900;letter-spacing:.2px;opacity:.96}.tileValue{font-size:29px;font-weight:900;margin-top:8px}.tileHint{font-size:13px;margin-top:5px;opacity:.9}
+.homeRoute{background:#fff;border-radius:24px;padding:18px;box-shadow:0 5px 20px #16324a12}.routeHead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.routeHead h3{margin:0;font-size:21px;color:#125a95}.routeHead .btn{border-radius:13px}.routeDay{background:#19c5bd;color:#fff;border-radius:15px 15px 0 0;padding:13px 14px;display:flex;justify-content:space-between;font-weight:900}.routeRows{border:1px solid #dcecf2;border-top:0;border-radius:0 0 15px 15px;overflow:hidden}.routeRow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 14px;border-bottom:1px solid #e4f0f4}.routeRow:last-child{border-bottom:0}.routeClient{font-weight:900;color:#125a95}.routeAddress{font-size:13px;color:#667b89;margin-top:3px}.routePrice{font-weight:900;color:#125a95;white-space:nowrap}.chev{color:#6e8999;font-size:20px}.homeHiddenStats{display:none!important}
+@media(max-width:600px){.main{padding:0 12px 85px}.homeHero{margin:0 -12px 16px;padding:22px 18px 24px;border-radius:0 0 22px 22px}.homeBrand{font-size:27px}.homeHeroTop{align-items:flex-start}.homeNew{padding:11px 12px!important;font-size:13px!important}.homeAlert{padding:14px;border-radius:20px}.alertHead{align-items:flex-start}.alertTitle{font-size:19px}.seeAll{padding:9px 10px}.homeTiles{gap:10px}.homeTile{padding:15px;min-height:116px;border-radius:19px}.tileValue{font-size:24px}.homeRoute{padding:14px;border-radius:20px}.routeHead h3{font-size:19px}.routeHead .btn{padding:9px 10px}.routeRow{padding:12px}.routePrice{font-size:14px}.alertItem{padding:10px 11px}.alertItem .lateValue{font-size:15px}}
+
+
+.servicebox{max-width:720px}.servicebox .top{align-items:flex-start}.servicebox .eyebrow{font-size:11px;font-weight:800;letter-spacing:1.4px;color:#1683e8;margin-bottom:3px}.servicebox h2{margin:0 0 4px}.servicebox .formsection{padding:16px 0;border-top:1px solid #e8eef5}.servicebox .formsection:first-of-type{border-top:0;padding-top:4px}.servicebox h3{font-size:15px;margin:0 0 12px;color:#18324b}.formgrid .full{grid-column:1/-1}.clientMini{margin-top:7px;padding:9px 11px;border-radius:10px;background:#f3f8fc;color:#60758a;font-size:12px}.recurrenceSection{background:#f7fbff;border:1px solid #dcecf8;border-radius:14px;padding:14px!important;margin:8px 0 4px}.recurrenceSection h3{color:#126fbf}.recurrenceHint{margin-top:10px;font-size:12px;color:#36708f}.serviceActions{display:flex;justify-content:flex-end;gap:10px;padding-top:16px;border-top:1px solid #e8eef5}.serviceActions .btn{min-width:140px}@media(max-width:640px){.servicebox{width:calc(100vw - 24px);max-height:92vh;overflow:auto}.serviceActions{position:sticky;bottom:0;background:#fff}.serviceActions .btn{flex:1;min-width:0}}
+
+.profileWrap{max-width:900px;margin:0 auto;padding-bottom:30px}.profileHero{background:linear-gradient(135deg,#0b5b96,#087bc1);color:#fff;border-radius:22px;padding:24px;margin-bottom:18px}.profileHero h1{margin:0 0 6px;font-size:30px}.profileHero p{margin:0;opacity:.9}.profileGrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.profileCard{background:#fff;border-radius:20px;padding:22px;box-shadow:0 6px 22px #16324a12}.profileAvatar{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#e8f4fc;color:#087bc1;font-size:32px;margin-bottom:14px;overflow:hidden}.profileAvatar img{width:100%;height:100%;object-fit:cover}.profileLogoPreview{display:none;width:110px;height:110px;border-radius:18px;object-fit:cover;margin:10px 0 6px;border:2px solid #dcecf7}.profileEmail{color:#71869a;font-size:13px;word-break:break-word}.profileActions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}.profileHint{font-size:12px;color:#71869a;margin-top:8px}@media(max-width:640px){.profileGrid{grid-template-columns:1fr}.profileHero{padding:20px;border-radius:18px}.profileCard{padding:18px}.profileActions .btn{flex:1}}
+.planStatusBox{margin:14px auto 2px;padding:10px 14px;border-radius:14px;background:#f0f8ff;color:#087bc1;font-weight:800;font-size:14px;max-width:420px}.planStatusBox.expired{background:#fff1f1;color:#d04444}.planStatusBox.active{background:#eefaf2;color:#3c9360}.plansWrap{max-width:900px;margin:0 auto;padding-bottom:30px}.plansHero{text-align:center;padding:10px 10px 24px}.plansHero .eyebrow{font-size:12px;font-weight:800;letter-spacing:1.8px;color:#1683e8}.plansHero h1{font-size:34px;line-height:1.12;margin:8px 0 10px;color:#18324b}.plansHero p{max-width:650px;margin:0 auto;color:#647b91;font-size:16px;line-height:1.5}.planCard{background:#fff;border:2px solid #1683e8;border-radius:24px;padding:28px;max-width:560px;margin:0 auto;box-shadow:0 14px 35px rgba(22,131,232,.12);text-align:center}.planBadge{display:inline-block;background:#e7f4ff;color:#087bc1;border-radius:999px;padding:7px 13px;font-size:12px;font-weight:800;letter-spacing:.8px}.planCard h2{font-size:27px;margin:15px 0 4px;color:#18324b}.planPrice{font-size:58px;font-weight:900;color:#087bc1;line-height:1.05}.planPrice span{font-size:20px;vertical-align:top;position:relative;top:10px}.planPrice small{font-size:17px;font-weight:700;color:#6d8296}.planEquivalent{margin:8px 0 20px;color:#6d8296}.planFeatures{text-align:left;border-top:1px solid #e7eef5;border-bottom:1px solid #e7eef5;padding:14px 4px;margin-bottom:20px}.planFeatures div{padding:8px 0;color:#31495e}.planCta{width:100%;font-size:18px;padding:14px}.planNote{font-size:12px;color:#7a8da0;margin-top:11px}.planTrust{text-align:center;color:#6d8296;font-size:13px;margin-top:16px}@media(max-width:640px){.plansHero h1{font-size:28px}.planCard{padding:22px 18px}.planPrice{font-size:48px}}
+.quoteMaterialRow{flex-wrap:wrap}.quoteMaterialRow select,.quoteMaterialRow input{margin:0}.quoteMaterialRow .qMatProduct{min-width:170px}@media(max-width:640px){.quoteMaterialRow{display:grid;grid-template-columns:1fr 1fr}.quoteMaterialRow .qMatProduct,.quoteMaterialRow .qMatName{grid-column:1/-1;width:100%;max-width:none}.quoteMaterialRow .qMatQty,.quoteMaterialRow .qMatValue{max-width:none;width:100%}.quoteMaterialRow .btn{width:100%}}
+.serviceDaysPicker{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:6px}.dayCheck{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid #dce8f1;border-radius:10px;background:#f8fbfd;cursor:pointer}.dayCheck input{width:auto;margin:0}.dayCheck span{font-weight:600;font-size:14px}@media(min-width:700px){.serviceDaysPicker{grid-template-columns:repeat(4,minmax(0,1fr))}}</style>
+</head>
+<body>
+<div id="authView" class="auth">
+  <div class="authbox">
+    <div class="logo">💧 Piscineiro<span>Pro</span></div>
+    <h1 id="authTitle">Entrar</h1>
+    <p class="muted" id="authSubtitle">Entre para acessar seus clientes, agenda e fichas.</p>
+    <div id="authMessage" class="authmsg hidden"></div>
+    <form id="authForm">
+      <label>E-mail</label><input id="authEmail" type="email" required autocomplete="email">
+      <label>Senha</label><input id="authPassword" type="password" required minlength="6" autocomplete="current-password">
+      <div id="nameField" class="hidden"><label>Seu nome</label><input id="authName" autocomplete="name"></div>
+      <button class="btn" style="width:100%;margin-top:5px" id="authSubmit">Entrar</button>
+    </form>
+    <button class="btn light" style="width:100%;margin-top:10px" id="toggleAuth">Criar minha conta</button>
+  </div>
+</div>
+
+<div id="setupView" class="auth hidden">
+  <div class="authbox setup">
+    <div class="logo">💧 Piscineiro<span>Pro</span></div>
+    <h1>Configuração do banco online</h1>
+    <p>Esta versão está preparada para funcionar com Supabase. Antes de publicar para clientes, coloque as duas informações no arquivo <b>supabase-config.js</b>.</p>
+    <ol>
+      <li>Crie um projeto no Supabase.</li>
+      <li>Execute o arquivo <b>supabase-schema.sql</b> no SQL Editor.</li>
+      <li>Copie a URL e a chave pública (Publishable key) para <b>supabase-config.js</b>.</li>
+      <li>Publique novamente esta pasta no Netlify.</li>
+    </ol>
+    <p class="muted">A chave pública anon pode ficar no navegador quando as políticas RLS do banco estiverem configuradas corretamente. Nunca coloque uma chave secreta/service_role no site.</p>
+  </div>
+</div>
+
+<div id="appView" class="hidden">
+<div class="app">
+<aside class="side">
+  <div class="logo">💧 Piscineiro<span>Pro</span></div>
+  <div class="userbox" id="userEmail"></div>
+  <div class="nav">
+    <button class="active" onclick="show('home',this)">🏠 Início</button>
+    <button onclick="show('clients',this)">👥 Clientes</button>
+    <button onclick="show('agenda',this)">📅 Agenda</button>
+    <button onclick="show('routes',this)">🚗 Rotas</button>
+    <button onclick="show('finance',this)">💰 Receber</button>
+    <button onclick="show('quotes',this)">🧾 Orçamentos</button>
+    <button onclick="show('receipts',this)">🧾 Recibos</button>
+    <button onclick="show('reports',this)">📊 Relatórios</button>
+    <button onclick="show('profile',this);renderProfile()">👤 Meu perfil</button>
+    <button onclick="show('plans',this)">🏆 Planos</button>
+    <button onclick="signOut()">🚪 Sair</button>
+  </div>
+</aside>
+<main class="main">
+<section id="home" class="screen active">
+<div class="homeHero"><div class="homeHeroTop"><div><div class="homeBrand">Piscineiro<span>Pro</span></div><div class="homeSubtitle">Sua rotina de piscinas na palma da mão</div><div class="homeDate" id="today"></div></div><div class="actions"><button class="homeGear" title="Meu perfil" onclick="show('profile',this);renderProfile()">⚙️</button><button class="btn homeNew" onclick="openServiceModal()">+ Novo avulso</button></div></div></div>
+<div class="homeAlert"><div class="alertHead"><div><div class="alertTitle"><span class="alertIcon">🔔</span> <span id="homeLateCount">0 cobranças em atraso</span></div><div class="alertSub">Mensalidades que precisam da sua atenção</div></div><button class="seeAll" onclick="show('finance')">Ver todas ›</button></div><div class="alertList" id="homeLateList"><div class="empty">Nenhuma cobrança atrasada.</div></div></div>
+<div class="homeTiles"><div class="homeTile greenTile"><div class="tileLabel">💵 FATURAMENTO</div><div class="tileValue" id="homeRevenueTile">R$ 0</div><div class="tileHint">Já recebido</div></div><div class="homeTile redTile"><div class="tileLabel">⌛ A RECEBER</div><div class="tileValue" id="homeOpenTile">R$ 0</div><div class="tileHint">Na rua</div></div><div class="homeTile cyanTile"><div class="tileLabel">🏊 PISCINAS</div><div class="tileValue" id="homeClientsTile">0</div><div class="tileHint">Na carteira</div></div><div class="homeTile purpleTile"><div class="tileLabel">🚀 POTENCIAL</div><div class="tileValue" id="homePotentialTile">R$ 0</div><div class="tileHint">Carteira completa</div></div></div>
+<div class="homeRoute"><div class="routeHead"><h3>📅 Rota de hoje</h3><button class="btn light" onclick="show('routes')">Ver semana ›</button></div><div class="routeDay"><span id="homeRouteDay">Hoje</span><span id="homeRouteCount">0 piscinas</span></div><div class="routeRows" id="homeRouteList"><div class="empty">Nenhum serviço para hoje.</div></div></div>
+<div class="homeHiddenStats" aria-hidden="true"><span id="statToday">0</span><span id="statDone">0</span><span id="statPending">0</span><span id="statLate">R$ 0</span><span id="homeTodayMoney">R$ 0</span><span id="homeMonthMoney">R$ 0</span><span id="homeLateMoney">R$ 0</span><span id="routeCount">0 clientes</span><span id="homeList"></span></div>
+</section>
+
+<section id="clients" class="screen">
+<div class="top"><div><h1>Carteira de clientes</h1><div class="muted">Seus clientes ficam separados da conta de outros piscineiros</div></div><button class="btn" onclick="openClientModal()">+ Novo cliente</button></div>
+<input class="search" placeholder="🔎 Buscar cliente..." oninput="renderClients(this.value)">
+<div class="panel" style="margin-top:15px"><div id="clientList"></div></div>
+</section>
+
+<section id="clientDetail" class="screen">
+<div class="top"><div><h1 id="detailName"></h1><div class="muted" id="detailPhone"></div></div><div class="actions"><button class="btn greenbtn" onclick="whatsappCurrent()">WhatsApp</button><button class="btn light" onclick="show('clients')">← Voltar</button></div></div>
+<div class="cards"><div class="card"><div class="muted">Mensalidade</div><div class="value blue" id="detailPrice"></div></div><div class="card"><div class="muted">Piscina</div><div class="value" id="detailPool"></div></div><div class="card"><div class="muted">Próxima visita</div><div class="value" id="detailNext"></div></div><div class="card"><div class="muted">Status</div><div class="value green">Ativo</div></div></div>
+<div class="grid"><div class="panel"><h3>🏊 Ficha técnica</h3><div class="row"><span>Volume</span><b id="dVol"></b></div><div class="row"><span>Tipo</span><b id="dType"></b></div><div class="row"><span>Filtração</span><b id="dFilter"></b></div><div class="row"><span>Bomba</span><b id="dPump"></b></div><div class="row"><span>Aquecimento</span><b id="dHeat"></b></div><div class="row"><span>Vencimento</span><b id="dDueDay"></b></div><div class="row"><span>Dia do serviço</span><b id="dServiceDay"></b></div><div class="row"><span>Endereço</span><b id="dAddress"></b></div></div><div class="panel"><h3>🧪 Última manutenção</h3><div class="row"><span>pH</span><b id="dPh">—</b></div><div class="row"><span>Cloro</span><b id="dChlorine">—</b></div><div class="row"><span>Alcalinidade</span><b id="dAlk">—</b></div><button class="btn greenbtn" onclick="openMaintenance()">Registrar manutenção</button></div></div>
+<div class="panel" style="margin-top:18px"><h3>Histórico</h3><div id="clientHistory"></div></div>
+</section>
+
+<section id="agenda" class="screen"><div class="top"><div><h1>Agenda de serviços avulsos</h1><div class="muted">Use a agenda somente para trabalhos extras fora da sua carteira fixa.</div></div><button class="btn" onclick="openServiceModal()">+ Novo avulso</button></div><div class="panel"><div class="muted" style="margin-bottom:10px">📅 Seus clientes fixos ficam na Rota. Aqui entram somente serviços avulsos.</div><div id="agendaList"></div></div></section>
+<section id="routes" class="screen"><div class="top"><div><h1>🚗 Rota do dia</h1><div class="muted">Clientes agendados para hoje</div></div><button class="btn" onclick="openMaps()">📍 Abrir no Google Maps</button></div><div class="panel"><div id="routeList"></div></div></section>
+<section id="finance" class="screen"><div class="top"><div><h1>Receber</h1><div class="muted">Mensalidades dos clientes fixos e recebimentos de serviços avulsos.</div></div><button class="btn" onclick="openFinanceModal()">+ Lançamento avulso</button></div><div class="cards"><div class="card"><div class="muted">Faturamento</div><div class="value blue" id="finTotal">R$ 0</div></div><div class="card"><div class="muted">Recebido</div><div class="value green" id="finReceived">R$ 0</div></div><div class="card"><div class="muted">Em aberto</div><div class="value orange" id="finOpen">R$ 0</div></div><div class="card"><div class="muted">Atrasado</div><div class="value red" id="finLate">R$ 0</div></div></div><div class="panel" style="margin-top:18px"><h3>Movimentações</h3><div id="financeList"></div></div></section>
+<section id="quotes" class="screen"><div class="top"><div><h1>Orçamentos</h1><div class="muted">Propostas da sua conta</div></div><button class="btn" onclick="openQuoteModal()">+ Novo orçamento</button></div><div class="panel"><div id="quoteList"></div></div></section>
+<section id="receipts" class="screen"><div class="top"><div><h1>Recibos</h1><div class="muted">Crie, visualize e envie recibos para seus clientes.</div></div><button class="btn" onclick="openReceiptModal()">+ Novo recibo</button></div><div class="panel"><div id="receiptList"></div></div></section>
+<section id="profile" class="screen">
+<div class="profileWrap">
+  <div class="profileHero"><h1>👤 Meu perfil</h1><p>Configure os dados que representam seu negócio no PiscineiroPro.</p></div>
+  <div class="profileGrid">
+    <div class="profileCard">
+      <div class="profileAvatar">🏊</div>
+      <h2 style="margin:0 0 5px">Dados profissionais</h2>
+      <div class="profileEmail" id="profileEmail">—</div>
+      <form onsubmit="saveProfile(event)" style="margin-top:16px">
+        <label>Seu nome</label><input id="pName" required placeholder="Seu nome completo">
+        <label>Nome da empresa / negócio</label><input id="pCompany" placeholder="Ex.: Diego Piscinas">
+        <label>WhatsApp profissional</label><input id="pWhatsapp" placeholder="(00) 00000-0000">
+        
+<label>CPF ou CNPJ</label><input id="pCpfCnpj" placeholder="Digite seu CPF ou CNPJ">
+<label>Cidade</label><input id="pCity" placeholder="Ex.: Araras - SP">
+        <label>Logo da empresa</label>
+        <input id="pLogoFile" type="file" accept="image/png,image/jpeg,image/webp" onchange="uploadProfileLogo(event)">
+        <div class="profileHint">Escolha uma imagem do celular ou computador. Ela será enviada automaticamente e usada nos orçamentos e recibos.</div>
+        <input id="pLogo" type="hidden">
+        <img id="pLogoPreview" class="profileLogoPreview" alt="Prévia da logo">
+        <div class="profileActions" style="margin-top:8px"><button class="btn light" type="button" onclick="removeProfileLogo()">Remover logo</button></div>
+        <div class="profileActions"><button class="btn light" type="button" onclick="show('home')">Cancelar</button><button class="btn" type="submit">Salvar perfil</button></div>
+      </form>
+    </div>
+    <div class="profileCard">
+      <h2 style="margin-top:0">🚀 Onde seus dados serão usados</h2>
+      <div class="row"><span>Orçamentos</span><b>Seu nome e empresa</b></div>
+      <div class="row"><span>Recibos</span><b>Seus dados profissionais</b></div>
+      <div class="row"><span>WhatsApp</span><b>Contato do negócio</b></div>
+      <div class="row"><span>Aplicativo</span><b>Sua identidade</b></div>
+      <div class="panel" style="margin-top:18px;background:#f3f8fc;box-shadow:none"><b>🔒 Seus dados são exclusivos da sua conta.</b><div class="profileHint">Outros piscineiros não terão acesso ao seu perfil nem aos seus clientes.</div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="plans" class="screen">
+<div class="plansWrap">
+  <div class="plansHero">
+    <div class="eyebrow">PISCINEIROPRO</div>
+    <h1>Seu negócio organizado em um só lugar.</h1>
+    <p>Tenha sua carteira de clientes, recebimentos, rotas, agenda de avulsos, orçamentos e relatórios sempre à mão.</p>
+  </div>
+  <div class="planCard featuredPlan">
+    <div class="planBadge">PLANO ANUAL</div>
+    <div id="planStatusBox" class="planStatusBox">Carregando seu plano...</div>
+    <h2>Profissional</h2>
+    <div class="planPrice"><span>R$</span> 29,90 <small>/ano</small></div>
+    <div class="planEquivalent">Equivale a apenas <b>R$ 2,49 por mês</b></div>
+    <div class="planFeatures">
+      <div>✓ Clientes fixos e carteira</div>
+      <div>✓ Receber mensalidades</div>
+      <div>✓ Agenda de serviços avulsos</div>
+      <div>✓ Rotas e Google Maps</div>
+      <div>✓ Orçamentos e histórico</div>
+      <div>✓ Relatórios do negócio</div>
+      <div>✓ Aplicativo instalável no celular</div>
+    </div>
+    <button class="btn planCta" onclick="startPlanCheckout()">Quero assinar</button>
+    <div class="planNote">Pagamento único anual • acesso durante 12 meses</div>
+  </div>
+  <div class="planTrust">🔒 Pagamento seguro • ☁️ Dados salvos na nuvem • 📱 Acesso pelo celular e computador</div>
+</div>
+</section>
+
+<section id="reports" class="screen"><div class="top"><div><h1>Relatórios</h1><div class="muted">Visão do seu negócio</div></div></div><div class="cards"><div class="card"><div class="muted">Clientes</div><div class="value" id="repClients">0</div></div><div class="card"><div class="muted">Ativos</div><div class="value green" id="repActive">0</div></div><div class="card"><div class="muted">Serviços</div><div class="value blue" id="repServices">0</div></div><div class="card"><div class="muted">Orçamentos</div><div class="value" id="repQuotes">0</div></div></div><div class="panel" style="margin-top:18px"><h3>Faturamento recebido</h3><div style="font-size:35px;font-weight:800;color:#087bc1" id="repRevenue">R$ 0</div></div></section>
+</main></div>
+<div class="mobilebar"><button onclick="show('home',this)">🏠<br>Início</button><button onclick="show('clients',this)">👥<br>Clientes</button><button onclick="show('agenda',this)">📅<br>Agenda</button><button onclick="show('routes',this)">🚗<br>Rotas</button><button onclick="show('finance',this)">💰<br>Financeiro</button><button class="moreBtn" id="mobileMoreBtn" onclick="openMobileMenu()">☰<br>Mais</button></div>
+<div id="mobileMenuOverlay" class="mobileMenuOverlay" onclick="if(event.target===this)closeMobileMenu()"><div class="mobileMenuBox"><div class="mobileMenuTitle"><b>Mais opções</b><button class="mobileMenuClose" onclick="closeMobileMenu()">✕</button></div><div class="mobileMenuGrid"><button class="mobileMenuItem" onclick="closeMobileMenu();show('quotes',this)">🧾 Orçamentos<span>Crie e acompanhe propostas</span></button><button class="mobileMenuItem" onclick="closeMobileMenu();show('receipts',this)">🧾 Recibos<span>Crie e envie comprovantes</span></button><button class="mobileMenuItem" onclick="closeMobileMenu();show('reports',this)">📊 Relatórios<span>Veja os números do negócio</span></button><button class="mobileMenuItem" onclick="closeMobileMenu();show('profile',this);renderProfile()">👤 Meu perfil<span>Dados e identidade da empresa</span></button><button class="mobileMenuItem" onclick="closeMobileMenu();show('plans',this)">🏆 Planos<span>Seu acesso e assinatura</span></button><button class="mobileMenuItem" onclick="closeMobileMenu();signOut()">🚪 Sair<span>Encerrar sessão</span></button></div></div></div>
+</div>
+
+<!-- Modals -->
+<div id="clientModal" class="modal"><div class="modalbox"><div class="top"><h2 id="clientModalTitle">Novo cliente</h2><button class="btn light" onclick="closeModal('clientModal')">✕</button></div><form onsubmit="saveClient(event)"><input type="hidden" id="clientId"><div class="formgrid"><div><label>Nome / cliente</label><input id="cName" required></div><div><label>WhatsApp</label><input id="cPhone"></div><div><label>Valor mensal</label><input id="cPrice" type="number" step="0.01"></div><div><label>Dia de vencimento</label><select id="cDueDay"><option value="">Não definido</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option></select></div><div class="full"><label>Dias da semana do serviço</label><div id="serviceDaysPicker" class="serviceDaysPicker"><label class="dayCheck"><input type="checkbox" name="cServiceDays" value="Segunda-feira"><span>Segunda-feira</span></label><label class="dayCheck"><input type="checkbox" name="cServiceDays" value="Terça-feira"><span>Terça-feira</span></label><label class="dayCheck"><input type="checkbox" name="cServiceDays" value="Quarta-feira"><span>Quarta-feira</span></label><label class="dayCheck"><input type="checkbox" name="cServiceDays" value="Quinta-feira"><span>Quinta-feira</span></label><label class="dayCheck"><input type="checkbox" name="cServiceDays" value="Sexta-feira"><span>Sexta-feira</span></label><label class="dayCheck"><input type="checkbox" name="cServiceDays" value="Sábado"><span>Sábado</span></label><label class="dayCheck"><input type="checkbox" name="cServiceDays" value="Domingo"><span>Domingo</span></label></div><div class="muted" style="margin-top:6px">Você pode selecionar um ou vários dias.</div></div><div><label>Volume da piscina</label><input id="cPool" placeholder="30.000 L"></div><div><label>Tipo</label><select id="cType"><option>Vinil</option><option>Fibra</option><option>Alvenaria</option><option>Azulejo</option></select></div><div><label>Filtração</label><input id="cFilter" value="Filtro de areia"></div><div><label>Bomba</label><input id="cPump"></div><div><label>Aquecimento</label><select id="cHeat"><option>Não</option><option>Sim</option></select></div></div><label>Endereço</label><input id="cAddress"><div class="actions"><button class="btn" type="submit">Salvar cliente</button></div></form></div></div>
+
+<div id="serviceModal" class="modal"><div class="modalbox servicebox"><div class="top"><div><div class="eyebrow">AVULSO</div><h2>Novo serviço avulso</h2><div class="muted">Cadastre um trabalho extra sem transformar o cliente em mensalista.</div></div><button class="btn light" onclick="closeModal('serviceModal')">✕</button></div><form onsubmit="saveService(event)"><div class="formsection"><h3>👤 Cliente avulso</h3><div class="formgrid"><div><label>Nome</label><input id="sAvulsoName" required placeholder="Nome do cliente"></div><div><label>WhatsApp</label><input id="sAvulsoPhone" placeholder="(00) 00000-0000"></div><div class="full"><label>Endereço</label><input id="sAvulsoAddress" placeholder="Endereço do serviço"></div></div></div><div class="formsection"><h3>📅 Visita</h3><div class="formgrid"><div><label>Data</label><input id="sDate" type="date" required></div><div><label>Horário</label><input id="sTime" type="time" required></div><div><label>Valor do serviço</label><input id="sValue" type="number" min="0" step="0.01" value="180" required></div><div><label>Status</label><select id="sStatus"><option>Agendado</option><option>Pendente</option><option>Realizado</option><option>Cancelado</option></select></div><div><label>Tipo de serviço</label><select id="sType"><option>Limpeza</option><option>Tratamento químico</option><option>Visita técnica</option><option>Instalação</option><option>Manutenção</option><option>Outro</option></select></div></div></div><div class="formsection"><h3>📝 Observação</h3><label>Detalhes da visita</label><textarea id="sNote" rows="3" placeholder="Ex.: limpar bordas, aspirar fundo, verificar bomba..."></textarea></div><div class="serviceActions"><button class="btn light" type="button" onclick="closeModal('serviceModal')">Cancelar</button><button class="btn" type="submit">✓ Salvar avulso</button></div></form></div></div><div id="financeModal" class="modal"><div class="modalbox"><div class="top"><h2>Novo lançamento</h2><button class="btn light" onclick="closeModal('financeModal')">✕</button></div><form onsubmit="saveFinance(event)"><div class="formgrid"><div><label>Descrição</label><input id="fDesc" required></div><div><label>Valor</label><input id="fValue" type="number" step="0.01" required></div><div><label>Data</label><input id="fDate" type="date" required></div><div><label>Status</label><select id="fStatus"><option>Recebido</option><option>Em aberto</option><option>Atrasado</option></select></div></div><button class="btn" type="submit">Salvar lançamento</button></form></div></div>
+
+<div id="quoteModal" class="modal"><div class="modalbox"><div class="top"><h2>Novo orçamento</h2><button class="btn light" onclick="closeModal('quoteModal')">✕</button></div><form onsubmit="saveQuote(event)"><div class="formgrid"><div><label>Nome do cliente / interessado</label><input id="qName" required placeholder="Digite qualquer nome"></div><div><label>WhatsApp (opcional)</label><input id="qPhone" placeholder="(00) 00000-0000"></div><div><label>Vincular cliente cadastrado (opcional)</label><select id="qClient" onchange="useQuoteClient()"><option value="">Não vincular</option></select></div><div><label>Serviço</label><input id="qService" value="Manutenção preventiva"></div><div><label>Mão de obra</label><input id="qLabor" type="number" min="0" step="0.01" value="350"></div><div><label>Status</label><select id="qStatus"><option>Rascunho</option><option>Enviado</option><option>Aprovado</option><option>Recusado</option></select></div></div><div class="quoteMaterials" style="margin-top:16px"><div class="top" style="margin-bottom:8px"><div><h3 style="margin:0">Materiais</h3><div class="muted">Selecione um produto, informe a quantidade e o valor unitário. Você também pode adicionar um produto manualmente.</div></div><button class="btn light" type="button" onclick="addQuoteMaterial()">+ Material</button></div><div id="quoteMaterialRows"></div><div class="row"><span><b>Total dos materiais</b></span><b id="qMaterialTotal">R$ 0,00</b></div></div><button class="btn" type="submit" style="margin-top:16px">Salvar orçamento</button></form></div></div>
+<div id="receiptModal" class="modal"><div class="modalbox"><div class="top"><h2>Novo recibo</h2><button class="btn light" onclick="closeModal('receiptModal')">✕</button></div><form onsubmit="saveReceipt(event)"><div class="formgrid"><div><label>Cliente</label><select id="rClient" required></select></div><div><label>Valor recebido</label><input id="rAmount" type="number" min="0" step="0.01" required></div><div><label>Descrição</label><input id="rDescription" value="Serviço de piscina"></div><div><label>Data</label><input id="rDate" type="date" required></div></div><div class="actions"><button class="btn light" type="button" onclick="closeModal('receiptModal')">Cancelar</button><button class="btn" type="submit">Salvar recibo</button></div></form></div></div>
+
+<div id="maintenanceModal" class="modal"><div class="modalbox"><div class="top"><h2>Registrar manutenção</h2><button class="btn light" onclick="closeModal('maintenanceModal')">✕</button></div><form onsubmit="saveMaintenance(event)"><div class="formgrid"><div><label>pH</label><input id="mPh" value="7,4"></div><div><label>Cloro (ppm)</label><input id="mChlorine" value="2,0"></div><div><label>Alcalinidade (ppm)</label><input id="mAlk" value="100"></div><div><label>Temperatura (°C)</label><input id="mTemp" value="28"></div></div><label>Produtos / observações</label><textarea id="mNote" rows="4"></textarea><button class="btn greenbtn" type="submit">FINALIZAR SERVIÇO</button></form></div></div>
+<div id="toast" class="toast hidden"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+const publicKey = window.PISCINEIROPRO_CONFIG?.publishableKey || window.PISCINEIROPRO_CONFIG?.anonKey || '';
+const configured = !!(window.PISCINEIROPRO_CONFIG?.url && publicKey && !window.PISCINEIROPRO_CONFIG.url.includes('COLOQUE') && !publicKey.includes('COLOQUE'));
+let supabaseClient=null, currentUser=null, currentClient=null, authMode='login';
+const $=id=>document.getElementById(id);
+const todayISO=()=>new Date().toISOString().slice(0,10);
+const money=v=>Number(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+const fmtDate=s=>s?new Date(s+'T12:00:00').toLocaleDateString('pt-BR'):'—';
+const toast=m=>{ $('toast').textContent=m;$('toast').classList.remove('hidden');setTimeout(()=>$('toast').classList.add('hidden'),2500) };
+async function show(id,btn){if(id!=='plans'&&currentUser){const allowed=await enforcePlanAccess();if(!allowed)return;}document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');document.querySelectorAll('.nav button,.mobilebar button').forEach(x=>x.classList.remove('active'));if(btn)btn.classList.add('active');const mobileMain=['home','clients','agenda','routes','finance'];if(!mobileMain.includes(id)&&$('mobileMoreBtn'))$('mobileMoreBtn').classList.add('active');window.scrollTo(0,0);if(id==='clients')renderClients();if(id==='plans')refreshPlanStatus();if(id==='receipts')renderReceipts();}
+function openMobileMenu(){if($('mobileMenuOverlay'))$('mobileMenuOverlay').classList.add('open')}
+function closeMobileMenu(){if($('mobileMenuOverlay'))$('mobileMenuOverlay').classList.remove('open')}
+function previewProfileLogo(){const url=$('pLogo').value.trim(), img=$('pLogoPreview'), avatar=document.querySelector('.profileAvatar'); if(!url){img.style.display='none'; img.removeAttribute('src'); if(avatar) avatar.innerHTML='🏊'; return;} img.src=url; img.style.display='block'; img.onerror=()=>{img.style.display='none';}; if(avatar){avatar.innerHTML=''; const a=document.createElement('img'); a.src=url; a.alt='Logo'; a.onerror=()=>{avatar.innerHTML='🏊';}; avatar.appendChild(a);}}
+async function uploadProfileLogo(e){const file=e.target.files?.[0];if(!file||!currentUser)return;const allowed=['image/png','image/jpeg','image/webp'];if(!allowed.includes(file.type)){alert('Escolha uma imagem PNG, JPG ou WEBP.');e.target.value='';return;}if(file.size>5*1024*1024){alert('A logo deve ter no máximo 5 MB.');e.target.value='';return;}try{const ext=(file.name.split('.').pop()||'png').toLowerCase().replace(/[^a-z0-9]/g,'')||'png';const path=`${currentUser.id}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;const {error}=await supabaseClient.storage.from('logos').upload(path,file,{contentType:file.type,upsert:false});if(error)throw error;const {data}=supabaseClient.storage.from('logos').getPublicUrl(path);$('pLogo').value=data.publicUrl;previewProfileLogo();toast('Logo enviada com sucesso! Agora clique em Salvar perfil.');}catch(err){console.error(err);alert('Não foi possível enviar a logo. Verifique as permissões do armazenamento no Supabase.');}finally{e.target.value='';}}
+function removeProfileLogo(){$('pLogo').value='';previewProfileLogo();toast('Logo removida do perfil. Clique em Salvar perfil para confirmar.')}
+async function renderProfile(){if(!currentUser||!supabaseClient)return; $('profileEmail').textContent=currentUser.email||'E-mail não informado'; const {data,error}=await supabaseClient.from('profiles').select('id,name,company_name,whatsapp,city,logo_url,cpf_cnpj').eq('id',currentUser.id).maybeSingle(); if(error){toast(error.message);return} $('pName').value=data?.name||currentUser.user_metadata?.name||''; $('pCompany').value=data?.company_name||''; $('pWhatsapp').value=data?.whatsapp||''; $('pCpfCnpj').value=data?.cpf_cnpj||''; $('pCity').value=data?.city||''; $('pLogo').value=data?.logo_url||''; previewProfileLogo();}
+async function saveProfile(e){e.preventDefault();if(!currentUser)return; const payload={id:currentUser.id,name:$('pName').value.trim(),company_name:$('pCompany').value.trim(),whatsapp:$('pWhatsapp').value.trim(),city:$('pCity').value.trim(),logo_url:$('pLogo').value.trim(),cpf_cnpj:$('pCpfCnpj').value.trim()}; const {error}=await supabaseClient.from('profiles').upsert(payload,{onConflict:'id'}); if(error)return toast(error.message); toast('Perfil salvo com sucesso!'); $('userEmail').textContent=payload.name?payload.name+' • '+(currentUser.email||''):currentUser.email||''; show('home');}
+
+function setAuthMessage(m){$('authMessage').textContent=m;$('authMessage').classList.toggle('hidden',!m)}
+function toggleAuthMode(){authMode=authMode==='login'?'signup':'login';$('authTitle').textContent=authMode==='login'?'Entrar':'Criar conta';$('authSubtitle').textContent=authMode==='login'?'Entre para acessar seus clientes, agenda e fichas.':'Crie sua conta de piscineiro. Seus dados ficarão separados dos outros usuários.';$('nameField').classList.toggle('hidden',authMode==='login');$('authSubmit').textContent=authMode==='login'?'Entrar':'Criar conta';$('toggleAuth').textContent=authMode==='login'?'Criar minha conta':'Já tenho uma conta';setAuthMessage('')}
+async function authSubmit(e){e.preventDefault();if(!configured){setAuthMessage('O banco online ainda não foi configurado. Preencha supabase-config.js conforme o guia.');return} const email=$('authEmail').value.trim(),password=$('authPassword').value;if(authMode==='login'){const {error}=await supabaseClient.auth.signInWithPassword({email,password});if(error)return setAuthMessage(error.message)} else {const name=$('authName').value.trim();const {data,error}=await supabaseClient.auth.signUp({email,password,options:{data:{name}}});if(error)return setAuthMessage(error.message);setAuthMessage(data.session?'Conta criada!':'Conta criada. Confira seu e-mail para confirmar o cadastro.')}}
+async function signOut(){await supabaseClient.auth.signOut()}
+let trialPromise=null;
+async function ensureTrial(user){
+  if(!user||!supabaseClient)return null;
+  if(trialPromise)return trialPromise;
+  trialPromise=(async()=>{
+    const {data,error}=await supabaseClient.from('profiles').select('id,name,plan_status,trial_started_at,trial_ends_at,subscription_expires_at').eq('id',user.id).maybeSingle();
+    if(error){toast(error.message);return null}
+    const now=new Date();
+    if(!data){
+      const start=now.toISOString(), end=new Date(now.getTime()+7*86400000).toISOString();
+      const {data:created,error:insError}=await supabaseClient.from('profiles').insert({id:user.id,name:user.user_metadata?.name||'',plan_status:'trial',trial_started_at:start,trial_ends_at:end});
+      if(insError){toast(insError.message);return null}
+      return created;
+    }
+    if(data.plan_status==='active')return data;
+    if(data.plan_status==='trial'&&data.trial_ends_at)return data;
+    const start=data.trial_started_at||now.toISOString();
+    const end=data.trial_ends_at||new Date(new Date(start).getTime()+7*86400000).toISOString();
+    const {data:updated,error:upError}=await supabaseClient.from('profiles').update({plan_status:'trial',trial_started_at:start,trial_ends_at:end}).eq('id',user.id).select().maybeSingle();
+    if(upError){toast(upError.message);return null}
+    return updated||{...data,plan_status:'trial',trial_started_at:start,trial_ends_at:end};
+  })().finally(()=>{trialPromise=null});
+  return trialPromise;
+}
+function renderPlanStatus(profile){
+  const el=$('planStatusBox'); if(!el)return;
+  if(!profile){el.textContent='Teste grátis';el.className='planStatusBox';return;}
+  if(profile.plan_status==='active'&&profile.subscription_expires_at){
+    const d=new Date(profile.subscription_expires_at);el.textContent='✓ Plano ativo até '+d.toLocaleDateString('pt-BR');el.className='planStatusBox active';return;
+  }
+  if(profile.plan_status==='trial'&&profile.trial_ends_at){
+    const end=new Date(profile.trial_ends_at),days=Math.max(0,Math.ceil((end-new Date())/86400000));
+    if(end>new Date()){el.textContent='🎁 Teste grátis: '+days+' dia'+(days===1?'':'s')+' restante'+(days===1?'':'s');el.className='planStatusBox';}
+    else{el.textContent='Seu teste grátis terminou. Assine para continuar.';el.className='planStatusBox expired';}
+    return;
+  }
+  if(profile.plan_status==='expired'){el.textContent='Seu acesso está aguardando renovação.';el.className='planStatusBox expired';return;}
+  el.textContent='Teste grátis';el.className='planStatusBox';
+}
+async function refreshPlanStatus(){
+  if(!currentUser||!supabaseClient)return null;
+  const {data}=await supabaseClient.from('profiles').select('plan_status,trial_started_at,trial_ends_at,subscription_expires_at').eq('id',currentUser.id).maybeSingle();
+  if(data?.plan_status==='trial'&&data.trial_ends_at&&new Date(data.trial_ends_at)<=new Date()){
+    const {data:expired,error}=await supabaseClient.from('profiles').update({plan_status:'expired'}).eq('id',currentUser.id).select('plan_status,trial_started_at,trial_ends_at,subscription_expires_at').maybeSingle();
+    if(!error){renderPlanStatus(expired);return expired;}
+  }
+  renderPlanStatus(data);
+  return data;
+}
+async function enforcePlanAccess(){
+  const profile=await refreshPlanStatus();
+  if(!profile)return true;
+  const active=profile.plan_status==='active'&&profile.subscription_expires_at&&new Date(profile.subscription_expires_at)>new Date();
+  const trial=profile.plan_status==='trial'&&profile.trial_ends_at&&new Date(profile.trial_ends_at)>new Date();
+  if(active||trial)return true;
+  document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));
+  $('plans').classList.add('active');
+  document.querySelectorAll('.nav button,.mobilebar button').forEach(x=>x.classList.remove('active'));
+  window.scrollTo(0,0);
+  toast('Seu teste terminou. Assine o plano anual para continuar usando o PiscineiroPro.');
+  return false;
+}
+function openApp(user){currentUser=user;$('authView').classList.add('hidden');$('setupView').classList.add('hidden');$('appView').classList.remove('hidden');$('userEmail').textContent=user.email||'';ensureTrial(user).then(async()=>{await enforcePlanAccess();renderAll()})}
+function openSetup(){$('authView').classList.add('hidden');$('appView').classList.add('hidden');$('setupView').classList.remove('hidden')}
+
+async function getClients(){const {data,error}=await supabaseClient.from('clients').select('*').order('name');if(error){toast(error.message);return[]}return data||[]}
+async function getServices(){const {data,error}=await supabaseClient.from('services').select('*, client:clients(name, phone, address)').order('date',{ascending:true}).order('time',{ascending:true});if(error){toast(error.message);return[]}return data||[]}
+async function getFinance(){const {data,error}=await supabaseClient.from('finance').select('*').order('date',{ascending:false});if(error){toast(error.message);return[]}return data||[]}
+async function getQuotes(){const {data,error}=await supabaseClient.from('quotes').select('*, client:clients(name)').order('created_at',{ascending:false});if(error){toast(error.message);return[]}return data||[]}
+async function getReceipts(){const {data,error}=await supabaseClient.from('receipts').select('*, client:clients(name,phone,address)').order('date',{ascending:false}).order('created_at',{ascending:false});if(error){toast(error.message);return[]}return data||[]}
+async function getBusinessProfile(){if(!currentUser)return {};const {data}=await supabaseClient.from('profiles').select('name,company_name,whatsapp,city,logo_url,cpf_cnpj').eq('id',currentUser.id).maybeSingle();return data||{}}
+function cleanPhone(phone){return String(phone||'').replace(/\D/g,'')}
+function whatsappUrl(phone,text){const n=cleanPhone(phone);if(!n)return null;return 'https://wa.me/55'+n+'?text='+encodeURIComponent(text)}
+function openWhatsApp(phone,text){const url=whatsappUrl(phone,text);if(!url){alert('Este cliente não tem WhatsApp cadastrado.');return;}window.open(url,'_blank')}
+async function shareDocAsImage(){
+  const paper=document.getElementById('docPaper');
+  if(!paper)return;
+  try{
+    if(typeof html2canvas==='undefined'){alert('A função de imagem ainda está carregando. Tente novamente em alguns segundos.');return;}
+    const canvas=await html2canvas(paper,{scale:2,useCORS:true,backgroundColor:'#ffffff'});
+    const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));
+    if(!blob)throw new Error('Não foi possível criar a imagem.');
+    const file=new File([blob],'PiscineiroPro-documento.png',{type:'image/png'});
+    if(navigator.share && (!navigator.canShare || navigator.canShare({files:[file]}))){
+      await navigator.share({title:'PiscineiroPro',text:'Documento do PiscineiroPro',files:[file]});
+    }else{
+      const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='PiscineiroPro-documento.png';a.click();
+      setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+      alert('Imagem salva. Agora você pode anexá-la no WhatsApp.');
+    }
+  }catch(e){if(e?.name!=='AbortError')alert('Não foi possível compartilhar a imagem.');}
+}
+async function shareDocAsPDF(){
+  const paper=document.getElementById('docPaper');
+  if(!paper)return;
+  try{
+    if(typeof html2canvas==='undefined' || !window.jspdf?.jsPDF){alert('A função de PDF ainda está carregando. Tente novamente em alguns segundos.');return;}
+    const canvas=await html2canvas(paper,{scale:2,useCORS:true,backgroundColor:'#ffffff'});
+    const imgData=canvas.toDataURL('image/jpeg',0.95);
+    const pdf=new window.jspdf.jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+    const pageW=210,pageH=297,margin=8;
+    const usableW=pageW-margin*2;
+    const imgH=canvas.height*usableW/canvas.width;
+    let y=margin,remaining=imgH;
+    pdf.addImage(imgData,'JPEG',margin,y,usableW,imgH);
+    remaining-=pageH-margin*2;
+    while(remaining>0){y=margin-(imgH-remaining);pdf.addPage();pdf.addImage(imgData,'JPEG',margin,y,usableW,imgH);remaining-=pageH-margin*2;}
+    const blob=pdf.output('blob');
+    const file=new File([blob],'PiscineiroPro-documento.pdf',{type:'application/pdf'});
+    if(navigator.share && (!navigator.canShare || navigator.canShare({files:[file]}))){
+      await navigator.share({title:'PiscineiroPro',text:'Documento do PiscineiroPro',files:[file]});
+    }else{
+      pdf.save('PiscineiroPro-documento.pdf');
+      alert('PDF salvo. Agora você pode anexá-lo no WhatsApp.');
+    }
+  }catch(e){if(e?.name!=='AbortError')alert('Não foi possível gerar o PDF.');}
+}
+function docWindow(title,body){
+const mobile=window.matchMedia('(max-width: 600px)').matches||/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)||window.matchMedia('(display-mode: standalone)').matches;
+if(mobile){
+let ov=document.getElementById('docMobileOverlay');
+if(!ov){ov=document.createElement('div');ov.id='docMobileOverlay';ov.style.cssText='position:fixed;inset:0;z-index:99999;overflow:auto;background:#eef5f9;padding:10px;box-sizing:border-box;';document.body.appendChild(ov)}
+ov.innerHTML=`<div style="display:flex;gap:8px;justify-content:space-between;align-items:center;margin:0 auto 10px;max-width:760px;flex-wrap:wrap"><button type="button" style="border:1px solid #b8c9d8;background:#fff;color:#18324b;padding:11px 14px;border-radius:10px;font-weight:700;cursor:pointer" onclick="document.getElementById('docMobileOverlay').remove()">← Voltar ao PiscineiroPro</button><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" style="border:0;background:#087bc1;color:#fff;padding:11px 14px;border-radius:10px;font-weight:700;cursor:pointer" onclick="shareDocAsPDF()">📲 WhatsApp PDF</button><button type="button" style="border:0;background:#15945c;color:#fff;padding:11px 14px;border-radius:10px;font-weight:700;cursor:pointer" onclick="shareDocAsImage()">📲 WhatsApp imagem</button></div></div><div id="docPaper" style="max-width:760px;margin:0 auto;background:#fff;padding:20px;border-radius:14px;box-sizing:border-box">${body}</div>`;
+return ov;
+}
+const w=window.open('','_blank');if(!w){alert('O navegador bloqueou a janela. Permita pop-ups para o PiscineiroPro.');return null;}w.document.write(`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title><style>*{box-sizing:border-box}body{font-family:Arial,sans-serif;background:#eef5f9;margin:0;padding:20px;color:#18324b}.paper{max-width:760px;margin:0 auto;background:#fff;padding:34px;border-radius:18px;box-shadow:0 8px 30px #16324a18}.docHeader{display:flex;justify-content:space-between;gap:24px;align-items:flex-start;border-bottom:2px solid #e6eef4;padding-bottom:18px;margin-bottom:20px}.docBrand{display:flex;align-items:flex-start;gap:16px;min-width:0}.docLogo{width:88px;height:88px;max-width:88px;max-height:88px;object-fit:contain;border-radius:14px;display:block;flex:0 0 88px}.docCompany{font-size:22px;font-weight:900;color:#125a95;margin-top:2px}.docTitle{font-size:30px;font-weight:900;color:#18324b;white-space:nowrap}.docMeta{font-size:13px;color:#71869a;line-height:1.6}.docTotal{font-size:28px;font-weight:900;color:#087bc1}.docBox{background:#f6faff;border-radius:14px;padding:14px;margin:12px 0}.row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid #edf1f4;gap:10px}.row:last-child{border-bottom:0}.print{position:fixed;right:20px;top:20px;border:0;background:#087bc1;color:#fff;padding:12px 16px;border-radius:9px;font-weight:700;cursor:pointer}@media(max-width:600px){body{padding:10px}.paper{padding:20px;border-radius:14px}.docHeader{gap:12px}.docBrand{gap:10px}.docLogo{width:72px;height:72px;max-width:72px;max-height:72px;flex-basis:72px}.docCompany{font-size:18px}.docTitle{font-size:23px}.docMeta{font-size:12px}}@media(max-width:600px){.docActions{position:static;justify-content:flex-end;flex-wrap:wrap;margin-bottom:10px}.docActions button{font-size:13px;padding:10px 12px}}@media print{body{background:#fff;padding:0}.paper{box-shadow:none;max-width:none;border-radius:0}.docActions{display:none}} </style></head><body><div class="docActions"><button class="back" onclick="if(window.opener&&!window.opener.closed){window.opener.focus();window.close()}else{history.back()}">← Voltar ao PiscineiroPro</button><button class="print" onclick="window.print()">🖨️ Imprimir / Salvar PDF</button></div><div class="paper">${body}</div></body></html>`);w.document.close();return w}
+function quoteText(q,profile,client){const items=Array.isArray(q.material_items)?q.material_items:[];const materialLines=items.length?items.map(i=>{const qty=Math.max(1,Number(i.quantity||1));const unit=Number(i.unit_value??(qty?Number(i.value||0)/qty:0));return `- ${i.name}: ${qty} x ${money(unit)} = ${money(Number(i.value||unit*qty))}`}).join('\n'):`Material: ${money(q.material)}`;return `Olá, ${client?.name||''}! Segue seu orçamento do ${profile.company_name||'PiscineiroPro'}.\n\n${profile.company_name||profile.name||'PiscineiroPro'}\n${profile.city||''}\nServiço: ${q.service}\nMão de obra: ${money(q.labor)}\nMateriais:\n${materialLines}\nTotal: ${money(q.total)}\n\nOrçamento válido para o serviço descrito. Se desejar, posso esclarecer qualquer dúvida.`}
+function receiptText(r,profile,client){return `Olá, ${client?.name||''}! Segue seu recibo.
+
+${profile.company_name||profile.name||'PiscineiroPro'}
+${profile.city||''}
+Recibo de pagamento
+Descrição: ${r.description}
+Valor recebido: ${money(r.amount)}
+Data: ${fmtDate(r.date)}
+
+Obrigado pela preferência!`}
+
+async function getMaintenance(clientId){let q=supabaseClient.from('maintenance').select('*').order('date',{ascending:false});if(clientId)q=q.eq('client_id',clientId);const {data,error}=await q;if(error){toast(error.message);return[]}return data||[]}
+
+async function renderClients(q=''){const list=(await getClients()).filter(c=>c.name.toLowerCase().includes(q.toLowerCase()));$('clientList').innerHTML=list.length?list.map(c=>`<div class="row"><div onclick="openClient('${c.id}')" style="cursor:pointer"><b>${esc(c.name)}</b><br><span class="muted">${esc(c.pool||'Sem volume')} · ${money(c.price)}/mês · ${c.due_day?'Vence dia '+c.due_day:'Sem vencimento'} · ${esc(Array.isArray(c.service_days)&&c.service_days.length?c.service_days.join(', '):(c.service_day||'Dia de serviço não definido'))} · ${esc(c.phone||'Sem WhatsApp')}</span></div><div class="actions"><span class="badge">Ativo</span><button class="btn light" onclick="editClient('${c.id}')">Editar</button><button class="btn redbtn" onclick="deleteClient('${c.id}')">Excluir</button></div></div>`).join(''):'<div class="empty">Nenhum cliente cadastrado.</div>'}
+async function openClient(id){const clients=await getClients();currentClient=clients.find(c=>c.id===id);if(!currentClient)return;const c=currentClient;$('detailName').textContent=c.name;$('detailPhone').textContent=c.phone||'';$('detailPrice').textContent=money(c.price)+'/mês';$('detailPool').textContent=c.pool||'—';$('dVol').textContent=c.pool||'—';$('dType').textContent=c.type||'—';$('dFilter').textContent=c.filter||'—';$('dPump').textContent=c.pump||'—';$('dHeat').textContent=c.heat||'—';$('dAddress').textContent=c.address||'—';const ms=await getMaintenance(id);const sv=await getServices();const next=sv.filter(s=>s.client_id===id&&s.date>=todayISO()&&s.status!=='Cancelado').sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time))[0];$('detailNext').textContent=next?fmtDate(next.date):'—';$('dDueDay').textContent=c.due_day?('Dia '+c.due_day):'—';$('dServiceDay').textContent=(Array.isArray(c.service_days)&&c.service_days.length?c.service_days.join(', '):(c.service_day||'—'));if(ms[0]){$('dPh').textContent=ms[0].ph||'—';$('dChlorine').textContent=ms[0].chlorine||'—';$('dAlk').textContent=ms[0].alk||'—'}else{$('dPh').textContent='—';$('dChlorine').textContent='—';$('dAlk').textContent='—'}$('clientHistory').innerHTML=ms.length?ms.map(m=>`<div class="row"><span><b>${fmtDate(m.date)}</b><br><span class="muted">pH ${esc(m.ph||'—')} · Cloro ${esc(m.chlorine||'—')} · Alcalinidade ${esc(m.alk||'—')}</span></span><span>${esc(m.note||'')}</span></div>`).join(''):'<div class="empty">Nenhuma manutenção registrada.</div>';show('clientDetail')}
+function openModal(id){$(id).classList.add('open')}function closeModal(id){$(id).classList.remove('open')}
+function openClientModal(id=null){$('clientModalTitle').textContent=id?'Editar cliente':'Novo cliente';$('clientId').value=id||'';getClients().then(cs=>{const c=id?cs.find(x=>x.id===id):{};$('cName').value=c?.name||'';$('cPhone').value=c?.phone||'';$('cPrice').value=c?.price||'';$('cDueDay').value=c?.due_day||'';const days=Array.isArray(c?.service_days)?c.service_days:(c?.service_day?[String(c.service_day)]:[]);document.querySelectorAll('input[name="cServiceDays"]').forEach(x=>x.checked=days.includes(x.value));$('cPool').value=c?.pool||'';$('cType').value=c?.type||'Vinil';$('cFilter').value=c?.filter||'Filtro de areia';$('cPump').value=c?.pump||'';$('cHeat').value=c?.heat||'Não';$('cAddress').value=c?.address||'';openModal('clientModal')})}
+const editClient=id=>openClientModal(id);
+async function saveClient(e){e.preventDefault();const id=$('clientId').value;const serviceDays=[...document.querySelectorAll('input[name="cServiceDays"]:checked')].map(x=>x.value);const obj={name:$('cName').value.trim(),phone:$('cPhone').value.trim(),price:Number($('cPrice').value||0),due_day:$('cDueDay').value?Number($('cDueDay').value):null,service_day:serviceDays.join(', ' )||null,service_days:serviceDays,pool:$('cPool').value.trim(),type:$('cType').value,filter:$('cFilter').value.trim(),pump:$('cPump').value.trim(),heat:$('cHeat').value,address:$('cAddress').value.trim(),user_id:currentUser.id};let r=id?await supabaseClient.from('clients').update(obj).eq('id',id):await supabaseClient.from('clients').insert(obj);if(r.error)return toast(r.error.message);closeModal('clientModal');toast('Cliente salvo!');renderAll()}
+async function deleteClient(id){if(!confirm('Excluir este cliente e os registros vinculados?'))return;const {error}=await supabaseClient.from('clients').delete().eq('id',id);if(error)return toast(error.message);toast('Cliente excluído.');renderAll()}
+async function fillClientSelect(id){const cs=await getClients();$(id).innerHTML='<option value="">Não vincular</option>'+cs.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}
+function useQuoteClient(){const id=$('qClient').value;if(!id)return;getClients().then(cs=>{const c=cs.find(x=>x.id===id);if(!c)return;$('qName').value=c.name||'';$('qPhone').value=c.phone||''})}
+const QUOTE_PRODUCTS=['Cloro','Elevador de alcalinidade','Barrilha','Algicida manutenção','Algicida choque','Clarificante','Sulfato de alumínio','Oxidante'];
+function addQuoteMaterial(name='',value='',quantity=1){const row=document.createElement('div');row.className='row quoteMaterialRow';row.style.gap='8px';row.style.alignItems='center';const isPreset=QUOTE_PRODUCTS.includes(name);row.innerHTML=`<select class="qMatProduct" style="flex:1;min-width:170px;margin:0"><option value="">Selecione o produto</option>${QUOTE_PRODUCTS.map(x=>`<option value="${esc(x)}" ${x===name?'selected':''}>${esc(x)}</option>`).join('')}<option value="__manual__" ${name&&!isPreset?'selected':''}>Outro / digitar manualmente</option></select><input class="qMatName" placeholder="Nome do produto" value="${!isPreset?esc(name):''}" style="flex:1;min-width:150px;display:${name&&!isPreset?'block':'none'}"><input class="qMatQty" type="number" min="1" step="1" placeholder="Qtd." value="${Number(quantity)||1}" style="max-width:85px;margin:0"><input class="qMatValue" type="number" min="0" step="0.01" placeholder="Valor unit." value="${value}" style="max-width:125px;margin:0"><button class="btn redbtn" type="button" onclick="this.parentElement.remove();updateQuoteMaterialTotal()">Excluir</button>`;$('quoteMaterialRows').appendChild(row);const product=row.querySelector('.qMatProduct'),custom=row.querySelector('.qMatName');product.addEventListener('change',()=>{if(product.value==='__manual__'){custom.style.display='block';custom.focus()}else{custom.style.display='none';custom.value=''}updateQuoteMaterialTotal()});row.querySelector('.qMatQty').addEventListener('input',updateQuoteMaterialTotal);row.querySelector('.qMatValue').addEventListener('input',updateQuoteMaterialTotal);updateQuoteMaterialTotal()}
+function updateQuoteMaterialTotal(){const total=[...document.querySelectorAll('.quoteMaterialRow')].reduce((sum,row)=>sum+(Number(row.querySelector('.qMatQty')?.value||1)*Number(row.querySelector('.qMatValue')?.value||0)),0);$('qMaterialTotal').textContent=money(total)}
+function addDaysISO(iso,days){const d=new Date(iso+'T12:00:00');d.setDate(d.getDate()+days);return d.toISOString().slice(0,10)}
+function addMonthsISO(iso,months){const d=new Date(iso+'T12:00:00');const day=d.getDate();d.setDate(1);d.setMonth(d.getMonth()+months);const last=new Date(d.getFullYear(),d.getMonth()+1,0).getDate();d.setDate(Math.min(day,last));return d.toISOString().slice(0,10)}
+function updateRecurrenceLabel(){}
+function parseAvulso(note){const n=String(note||'');const m=n.match(/^\[AVULSO\]\s*([^|]+)\|\s*([^|]*)\|\s*([^|]*)\|\s*(.*)$/);return m?{name:m[1].trim(),phone:m[2].trim(),address:m[3].trim(),note:m[4].trim()}:null}
+let serviceClientCache=[];
+async function showSelectedClient(){}
+async function openServiceModal(){$('sAvulsoName').value='';$('sAvulsoPhone').value='';$('sAvulsoAddress').value='';$('sDate').value=todayISO();$('sTime').value='08:00';$('sValue').value='180';$('sStatus').value='Agendado';$('sType').value='Limpeza';$('sNote').value='';openModal('serviceModal')}
+async function saveService(e){e.preventDefault();const name=$('sAvulsoName').value.trim(),phone=$('sAvulsoPhone').value.trim(),address=$('sAvulsoAddress').value.trim(),date=$('sDate').value,time=$('sTime').value,value=Number($('sValue').value||0),status=$('sStatus').value,type=$('sType').value,note=$('sNote').value.trim();const packed=`[AVULSO] ${name} | ${phone} | ${address} | ${note}`;const row={user_id:currentUser.id,client_id:null,date,time,value,status,type,note:packed};const {error}=await supabaseClient.from('services').insert(row);if(error)return toast(error.message);closeModal('serviceModal');toast('Serviço avulso agendado!');renderAll()}
+async function completeService(id){const {data:s}=await supabaseClient.from('services').select('*').eq('id',id).single();if(!s)return;let r=await supabaseClient.from('services').update({status:'Realizado'}).eq('id',id);if(r.error)return toast(r.error.message);const av=parseAvulso(s.note);const desc=av?`Serviço avulso — ${av.name}`:'Serviço avulso';r=await supabaseClient.from('finance').insert({user_id:currentUser.id,description:desc,value:s.value,date:todayISO(),status:'Recebido'});if(r.error)return toast(r.error.message);toast('Avulso concluído e recebido lançado.');renderAll()}
+async function clientName(id){if(!id)return 'Cliente avulso';const {data}=await supabaseClient.from('clients').select('name').eq('id',id).single();return data?.name||'Cliente'}
+async function deleteService(id){if(confirm('Excluir este serviço avulso?')){const {error}=await supabaseClient.from('services').delete().eq('id',id);if(error)toast(error.message);else renderAll()}}
+async function renderAgenda(){const arr=(await getServices()).filter(s=>!s.client_id);$('agendaList').innerHTML=arr.length?arr.map(s=>{const av=parseAvulso(s.note);const name=av?.name||s.client?.name||'Cliente avulso';return `<div class="row"><span><b>${fmtDate(s.date)} · ${s.time}</b><br>${esc(name)} · ${esc(s.type||'')}</span><div class="actions"><b>${money(s.value)}</b><span class="badge ${s.status==='Realizado'?'':'orange'}">${s.status}</span>${s.status!=='Realizado'?`<button class="btn greenbtn" onclick="completeService('${s.id}')">Concluir</button>`:''}<button class="btn redbtn" onclick="deleteService('${s.id}')">Excluir</button></div></div>`}).join(''):'<div class="empty">Nenhum serviço avulso cadastrado.</div>'}
+async function renderRoutes(){const clients=await getClients(),day=new Date().getDay(),names=['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'],todayName=names[day],arr=clients.filter(c=>(c.service_days&&c.service_days.length?c.service_days.includes(todayName):String(c.service_day||'').split(',').map(x=>x.trim()).includes(todayName)));$('routeList').innerHTML=arr.length?arr.map((c,i)=>`<div class="row"><span><b>${i+1}. ${esc(c.name)}</b><br><span class="muted">Horário não definido · ${esc(c.address||'Sem endereço')}</span></span><span class="badge blue">Fixo</span></div>`).join(''):'<div class="empty">Não há clientes fixos programados para hoje.</div>'}
+async function openMaps(){const clients=await getClients(),day=new Date().getDay(),names=['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'],todayName=names[day],arr=clients.filter(c=>(c.service_days&&c.service_days.length?c.service_days.includes(todayName):String(c.service_day||'').split(',').map(x=>x.trim()).includes(todayName))).map(c=>c.address).filter(Boolean);if(!arr.length)return alert('Não há endereços de clientes fixos para hoje.');window.open('https://www.google.com/maps/dir/'+arr.map(encodeURIComponent).join('/'),'_blank')}
+async function openFinanceModal(){$('fDate').value=todayISO();$('fDesc').value='';$('fValue').value='';openModal('financeModal')}
+async function saveFinance(e){e.preventDefault();const {error}=await supabaseClient.from('finance').insert({user_id:currentUser.id,description:$('fDesc').value,value:Number($('fValue').value||0),date:$('fDate').value,status:$('fStatus').value});if(error)return toast(error.message);closeModal('financeModal');toast('Lançamento salvo!');renderAll()}
+function monthKey(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')}
+function dueDateForClient(c){const d=new Date();const y=d.getFullYear(),m=d.getMonth(),last=new Date(y,m+1,0).getDate();const day=Math.min(Math.max(Number(c.due_day||1),1),last);return `${y}-${String(m+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`}
+let monthlySyncPromise=null;
+async function ensureMonthlyCharges(clients,finance){if(monthlySyncPromise)return monthlySyncPromise;monthlySyncPromise=(async()=>{const key=monthKey();const existing=new Set(finance.map(x=>String(x.description||'')));const rows=[];for(const c of clients){const value=Number(c.price||0),due=Number(c.due_day||0);if(!c.id||value<=0||!due)continue;const desc=`Mensalidade — ${c.name} — ${key}`;if(existing.has(desc))continue;const dueDate=dueDateForClient(c);const status=todayISO()>dueDate?'Atrasado':'Em aberto';rows.push({user_id:currentUser.id,description:desc,value,date:dueDate,status});}if(rows.length){const {error}=await supabaseClient.from('finance').insert(rows);if(error){toast('Não foi possível gerar as mensalidades: '+error.message);return finance}return await getFinance()}return finance})().finally(()=>{monthlySyncPromise=null});return monthlySyncPromise}
+async function markMonthlyPaid(id){const {error}=await supabaseClient.from('finance').update({status:'Recebido'}).eq('id',id);if(error)return toast(error.message);toast('Mensalidade marcada como paga!');renderAll()}
+async function toggleMonthlyPaid(id,status){if(status==='Recebido'){const {data:r}=await supabaseClient.from('finance').select('date').eq('id',id).single();const back=r?.date&&todayISO()>r.date?'Atrasado':'Em aberto';const {error}=await supabaseClient.from('finance').update({status:back}).eq('id',id);if(error)return toast(error.message);toast('Mensalidade voltou para a receber.')}else await markMonthlyPaid(id);renderAll()}
+async function renderFinance(){const clients=await getClients();let arr=await getFinance();arr=await ensureMonthlyCharges(clients,arr);const key=monthKey(),monthly=arr.filter(x=>String(x.description||'').includes(` — ${key}`)),other=arr.filter(x=>!String(x.description||'').includes(` — ${key}`));const rec=monthly.filter(x=>x.status==='Recebido').reduce((a,x)=>a+Number(x.value),0),op=monthly.filter(x=>['Em aberto','Atrasado'].includes(x.status)).reduce((a,x)=>a+Number(x.value),0),late=monthly.filter(x=>x.status==='Atrasado').reduce((a,x)=>a+Number(x.value),0),avRec=other.filter(x=>x.status==='Recebido'&&String(x.date||'').slice(0,7)===key).reduce((a,x)=>a+Number(x.value),0);$('finTotal').textContent=money(rec+avRec);$('finReceived').textContent=money(rec+avRec);$('finOpen').textContent=money(op);$('finLate').textContent=money(late);$('financeList').innerHTML=monthly.length?monthly.sort((a,b)=>String(a.date).localeCompare(String(b.date))).map(x=>{const name=String(x.description).replace(`Mensalidade — `,'').replace(` — ${key}`,'');const paid=x.status==='Recebido';const due=new Date(x.date+'T12:00:00');const now=new Date();const days=Math.max(0,Math.floor((now-due)/86400000));const detail=paid?'✓ Pago':days>0?`⚠️ Atrasada ${days} dia${days===1?'':'s'} • ${money(x.value)}`:`📅 Vence dia ${due.getDate()}`;return `<div class="financeCard row" style="align-items:center"><span><b>${esc(name)}</b><br><span class="muted">${money(x.value)} · ${detail}</span></span><div class="actions"><span class="badge ${paid?'':'red'}">${paid?'PAGO':x.status==='Atrasado'?'DEVENDO':'A RECEBER'}</span><button class="btn ${paid?'greenbtn':'redbtn'}" onclick="toggleMonthlyPaid('${x.id}','${x.status}')">${paid?'✓ PAGO — TOCAR PRA DESMARCAR':'MARCAR COMO PAGO'}</button></div></div>`}).join(''):'<div class="empty">Nenhuma mensalidade cadastrada neste mês.</div>'}
+async function openQuoteModal(){await fillClientSelect('qClient');openModal('quoteModal')}
+async function openQuoteModal(){await fillClientSelect('qClient');$('qName').value='';$('qPhone').value='';$('qService').value='Manutenção preventiva';$('qLabor').value='350';$('qStatus').value='Rascunho';$('quoteMaterialRows').innerHTML='';addQuoteMaterial();openModal('quoteModal')}
+async function saveQuote(e){e.preventDefault();const name=$('qName').value.trim(),phone=$('qPhone').value.trim(),clientId=$('qClient').value||null,labor=Number($('qLabor').value||0),service=$('qService').value.trim(),status=$('qStatus').value;const items=[...document.querySelectorAll('.quoteMaterialRow')].map(r=>{const product=r.querySelector('.qMatProduct')?.value||'';const custom=r.querySelector('.qMatName')?.value.trim()||'';const name=product==='__manual__'?custom:product;const quantity=Math.max(1,Number(r.querySelector('.qMatQty')?.value||1));const unit_value=Number(r.querySelector('.qMatValue')?.value||0);return {name,quantity,unit_value,value:quantity*unit_value}}).filter(x=>x.name||x.value>0);const material=items.reduce((a,x)=>a+Number(x.value||0),0);if(!name)return toast('Informe o nome do cliente ou interessado.');if(!service)return toast('Informe o serviço.');const payload={user_id:currentUser.id,client_id:clientId,prospect_name:name,prospect_phone:phone,service,labor,material,material_items:items,total:labor+material,status};const {error}=await supabaseClient.from('quotes').insert(payload);if(error)return toast(error.message);closeModal('quoteModal');toast('Orçamento salvo!');renderAll()}
+async function renderQuotes(){const arr=await getQuotes();$('quoteList').innerHTML=arr.length?arr.map(q=>{const n=q.prospect_name||q.client?.name||'Interessado';return `<div class="row"><span><b>${esc(n)}</b><br>${esc(q.service)} · ${fmtDate(q.created_at?.slice(0,10))}</span><div class="receiptActions"><b>${money(q.total)}</b><span class="badge blue">${q.status}</span><button class="btn light" onclick="viewQuote('${q.id}')">👁 Ver</button><button class="btn greenbtn" onclick="sendQuote('${q.id}')">📲 Enviar</button></div></div>`}).join(''):'<div class="empty">Nenhum orçamento criado.</div>'}
+function quotePerson(q){return {name:q.prospect_name||q.client?.name||'Cliente',phone:q.prospect_phone||q.client?.phone||''}}
+async function viewQuote(id){const arr=await getQuotes(),q=arr.find(x=>x.id===id);if(!q)return;const profile=await getBusinessProfile(),person=quotePerson(q);const logo=profile.logo_url?`<img class="docLogo" src="${esc(profile.logo_url)}" alt="Logo">`:'';const items=Array.isArray(q.material_items)?q.material_items:[];const materialHtml=items.length?items.map(i=>{const qty=Math.max(1,Number(i.quantity||1));const unit=Number(i.unit_value??(qty?Number(i.value||0)/qty:0));const total=Number(i.value||unit*qty);return `<div class="row"><span>${esc(i.name)}${qty>1?`<br><small class="docMeta">${qty} × ${money(unit)}</small>`:''}</span><b>${money(total)}</b></div>`}).join(''):`<div class="row"><span>Materiais</span><b>${money(q.material)}</b></div>`;const body=`<div class="docHeader"><div class="docBrand">${logo}<div><div class="docCompany">${esc(profile.company_name||profile.name||'PiscineiroPro')}</div><div class="docMeta">${esc(profile.name||'')}${profile.city?' · '+esc(profile.city):''}${profile.cpf_cnpj?' · CPF/CNPJ: '+esc(profile.cpf_cnpj):''}<br>${esc(profile.whatsapp||'')}</div></div></div><div><div class="docTitle">ORÇAMENTO</div><div class="docMeta">Data: ${fmtDate(q.created_at?.slice(0,10))}</div></div></div><div class="docBox"><b>Cliente / interessado</b><br>${esc(person.name)}<br><span class="docMeta">${esc(person.phone||'')}</span></div><div class="docBox"><b>Serviço</b><br>${esc(q.service)}</div><div class="row"><span>Mão de obra</span><b>${money(q.labor)}</b></div><div class="docBox"><b>Materiais</b>${materialHtml}</div><div style="display:flex;justify-content:space-between;margin-top:18px"><b>Total</b><span class="docTotal">${money(q.total)}</span></div>`;return docWindow('Orçamento — '+person.name,body)}
+async function sendQuote(id){const arr=await getQuotes(),q=arr.find(x=>x.id===id);if(!q)return;const profile=await getBusinessProfile(),person=quotePerson(q);openWhatsApp(person.phone,quoteText(q,profile,person))}
+async function openReceiptModal(){await fillClientSelect('rClient');$('rDate').value=todayISO();$('rAmount').value='';$('rDescription').value='Serviço de piscina';openModal('receiptModal')}
+async function saveReceipt(e){e.preventDefault();const payload={user_id:currentUser.id,client_id:$('rClient').value,amount:Number($('rAmount').value||0),description:$('rDescription').value.trim(),date:$('rDate').value};const {error}=await supabaseClient.from('receipts').insert(payload);if(error)return toast(error.message);closeModal('receiptModal');toast('Recibo salvo!');renderAll()}
+async function renderReceipts(){const arr=await getReceipts();$('receiptList').innerHTML=arr.length?arr.map(r=>`<div class="row"><span><b>${esc(r.client?.name||'')}</b><br>${esc(r.description)} · ${fmtDate(r.date)}</span><div class="receiptActions"><b>${money(r.amount)}</b><button class="btn light" onclick="viewReceipt('${r.id}')">👁 Ver</button><button class="btn greenbtn" onclick="sendReceipt('${r.id}')">📲 Enviar</button></div></div>`).join(''):'<div class="empty">Nenhum recibo criado.</div>'}
+async function viewReceipt(id){const arr=await getReceipts(),r=arr.find(x=>x.id===id);if(!r)return;const profile=await getBusinessProfile(),client=r.client||{};const logo=profile.logo_url?`<img class="docLogo" src="${esc(profile.logo_url)}" alt="Logo">`:'';const body=`<div class="docHeader"><div class="docBrand">${logo}<div><div class="docCompany">${esc(profile.company_name||profile.name||'PiscineiroPro')}</div><div class="docMeta">${esc(profile.name||'')}${profile.city?' · '+esc(profile.city):''}${profile.cpf_cnpj?' · CPF/CNPJ: '+esc(profile.cpf_cnpj):''}<br>${esc(profile.whatsapp||'')}</div></div></div><div><div class="docTitle">RECIBO</div><div class="docMeta">Data: ${fmtDate(r.date)}</div></div></div><div class="docBox"><b>Recebi de</b><br>${esc(client.name||'')}<br><span class="docMeta">${esc(client.phone||'')}</span></div><div class="docBox"><b>Referente a</b><br>${esc(r.description)}</div><div style="margin-top:25px"><span class="docMeta">Valor recebido</span><div class="docTotal">${money(r.amount)}</div></div><p style="margin-top:35px">Obrigado pela preferência!</p>`;return docWindow('Recibo — '+(client.name||''),body)}
+async function sendReceipt(id){const arr=await getReceipts(),r=arr.find(x=>x.id===id);if(!r)return;const clients=await getClients(),client=clients.find(c=>c.id===r.client_id)||r.client||{};const profile=await getBusinessProfile();openWhatsApp(client.phone,receiptText(r,profile,client))}
+function openMaintenance(){if(currentClient)openModal('maintenanceModal')}
+async function saveMaintenance(e){e.preventDefault();const {error}=await supabaseClient.from('maintenance').insert({user_id:currentUser.id,client_id:currentClient.id,date:todayISO(),ph:$('mPh').value,chlorine:$('mChlorine').value,alk:$('mAlk').value,temp:$('mTemp').value,note:$('mNote').value});if(error)return toast(error.message);closeModal('maintenanceModal');toast('Manutenção registrada!');openClient(currentClient.id)}
+async function renderHome(){const [sv,clients]=await Promise.all([getServices(),getClients()]);let fi=await getFinance();fi=await ensureMonthlyCharges(clients,fi);const key=monthKey(),weekdayNames=['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'],todayName=weekdayNames[new Date().getDay()],today=clients.filter(c=>(c.service_days&&c.service_days.length?c.service_days.includes(todayName):String(c.service_day||'').split(',').map(x=>x.trim()).includes(todayName))),done=0,pending=today.length,monthly=fi.filter(x=>String(x.description||'').includes(` — ${key}`)),lateArr=monthly.filter(x=>x.status==='Atrasado'),late=lateArr.reduce((a,x)=>a+Number(x.value),0),received=monthly.filter(x=>x.status==='Recebido').reduce((a,x)=>a+Number(x.value),0),open=monthly.filter(x=>['Em aberto','Atrasado'].includes(x.status)).reduce((a,x)=>a+Number(x.value),0),potential=clients.reduce((a,c)=>a+Number(c.price||0),0);$('statToday').textContent=today.length;$('statDone').textContent=done;$('statPending').textContent=pending;$('statLate').textContent=money(late);$('homeTodayMoney').textContent=money(0);$('homeMonthMoney').textContent=money(received);$('homeLateMoney').textContent=money(late);$('routeCount').textContent=today.length+' clientes';$('homeRevenueTile').textContent=money(received);$('homeOpenTile').textContent=money(open);$('homeClientsTile').textContent=clients.length;$('homePotentialTile').textContent=money(potential);$('homeLateCount').textContent=lateArr.length+(lateArr.length===1?' cobrança em atraso':' cobranças em atraso');$('homeLateList').innerHTML=lateArr.length?lateArr.slice(0,4).map(x=>{const name=String(x.description).replace(`Mensalidade — `,'').replace(` — ${key}`,'');return `<div class="alertItem"><div><b>${esc(name)}</b><small>⚠️ Mensalidade em atraso</small></div><div class="lateValue">${money(x.value)}</div></div>`}).join(''):'<div class="empty">Nenhuma cobrança atrasada.</div>';$('homeRouteDay').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long'}).replace(/^./,c=>c.toUpperCase());$('homeRouteCount').textContent=today.length+(today.length===1?' piscina':' piscinas');const arr=today.slice(0,6);$('homeRouteList').innerHTML=arr.length?arr.map(c=>`<div class="routeRow"><div><div class="routeClient">${esc(c.name)}</div><div class="routeAddress">${esc(c.address||'Endereço não informado')}</div></div><div class="routePrice"><span class="chev">›</span></div></div>`).join(''):'<div class="empty">Nenhum cliente fixo na rota de hoje.</div>'}
+async function renderReports(){const [c,s,q,f]=await Promise.all([getClients(),getServices(),getQuotes(),getFinance()]);const key=monthKey();$('repClients').textContent=c.length;$('repActive').textContent=c.length;$('repServices').textContent=s.length;$('repQuotes').textContent=q.length;$('repRevenue').textContent=money(f.filter(x=>x.status==='Recebido'&&String(x.date||'').slice(0,7)===key).reduce((a,x)=>a+Number(x.value),0))}
+async function startPlanCheckout(){
+  if(!currentUser||!supabaseClient){alert('Faça login para continuar.');return;}
+  const btn=document.querySelector('.planCta');
+  const original=btn?.textContent||'Quero assinar';
+  if(btn){btn.disabled=true;btn.textContent='Preparando pagamento...';}
+  try{
+    const {data,error}=await supabaseClient.functions.invoke('asaas-create-subscription',{body:await (async()=>{const {data:profile,error:profileError}=await supabaseClient.from('profiles').select('name,cpf_cnpj').eq('id',currentUser.id).maybeSingle();if(profileError)throw profileError;return {name:String(profile?.name||currentUser.user_metadata?.name||'').trim(),email:String(currentUser.email||'').trim(),cpfCnpj:String(profile?.cpf_cnpj||'').replace(/\D/g,'')};})()});
+    if(error){
+      console.error('Erro ao iniciar pagamento:',error);
+      throw new Error(error.message||'Não foi possível iniciar o pagamento.');
+    }
+    if(!data?.success){
+      console.error('Resposta do pagamento:',data);
+      throw new Error(data?.error||'Não foi possível criar a assinatura.');
+    }
+    const paymentUrl=data.invoiceUrl||data.bankSlipUrl||data.paymentUrl||data.subscription?.invoiceUrl||data.subscription?.bankSlipUrl;
+    if(paymentUrl){
+      window.location.href=paymentUrl;
+      return;
+    }
+    throw new Error('A assinatura foi criada, mas o link de pagamento não foi retornado.');
+  }catch(err){
+    console.error(err);
+    alert('Não foi possível abrir o pagamento agora. Tente novamente em alguns instantes.');
+    if(btn){btn.disabled=false;btn.textContent=original;}
+  }
+}
+async function renderAll(){if(!currentUser)return;$('today').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});await Promise.all([renderClients(document.querySelector('#clients .search')?.value||''),renderAgenda(),renderRoutes(),renderFinance(),renderQuotes(),renderReceipts(),renderHome(),renderReports()])}
+
+$('authForm').addEventListener('submit',authSubmit);$('toggleAuth').addEventListener('click',toggleAuthMode);
+document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open')}));
+(async()=>{if(!configured){openSetup();return}supabaseClient=window.supabase.createClient(window.PISCINEIROPRO_CONFIG.url,publicKey);const {data}=await supabaseClient.auth.getSession();if(data.session)openApp(data.session.user);else $('authView').classList.remove('hidden');supabaseClient.auth.onAuthStateChange((_event,session)=>{if(session)openApp(session.user);else{currentUser=null;$('appView').classList.add('hidden');$('setupView').classList.add('hidden');$('authView').classList.remove('hidden')}})})();
+</script>
+
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
+</body>
+</html>
